@@ -1,20 +1,19 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div class="calc-main">
+    <div class="calc-display">
+    <!-- Línea de expresión -->
+    <ion-input class="ion-text-end">{{ expression }}</ion-input>
+    <ion-input class="ion-text-end" readonly [value]="value"></ion-input>
+  </div>
+    <!-- <div class="calc-display">
+      <ion-input type="number" [(ngModel)]="value" class="ion-text-end" readonly></ion-input>
+    </div> -->
+    <ion-grid>
+      <ion-row *ngFor="let buttonGroup of buttonGroups">
+        <ion-col *ngFor="let button of buttonGroup">
+          <ion-button shape="round" color="light" (click)="pressButton(button)">{{button}}</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </div>
 </ion-content>
