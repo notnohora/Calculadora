@@ -78,6 +78,33 @@ export class HomePage {
       this.lastOperator = '';
       this.lastValue = ''
     }
+    // Parentesis
+    else if(Symbol === '()'){
+
+    }
+    // Positive/Negative
+    else if(Symbol === '+/-'){
+      this.auxValue = this.value;
+      if (this.value.startsWith('-')) {
+        this.value = this.value.slice(1);
+      } 
+      else {
+        this.value = '-' + this.value;
+      }
+
+      if (this.expression.length > 0) {
+        if(this.auxValue.startsWith('-')){
+          this.expression = this.expression.replace(/([+\-*/])?(-\d+\.?\d*)$/, (match, operator, number) => {
+          return (operator || '') + number.slice(1);;
+          });
+        }else{
+          this.expression = this.expression.replace(/([+\-*/])?(\d+\.?\d*)$/, (match, operator, number) => {
+          return (operator || '') + '-' + number;
+          });
+        }
+        
+      }
+    }
   // Equals
     else if (Symbol === '='){
       if(this.lastOperator !== '%' && this.value !== this.lastValue){
