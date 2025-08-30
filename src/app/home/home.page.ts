@@ -12,6 +12,7 @@ import { last } from 'rxjs';
 })
 export class HomePage {
   constructor() {}
+  parenthesis = 2;
   value = '';
   auxValue = '';
   readyForNewInput = true;
@@ -78,9 +79,23 @@ export class HomePage {
       this.lastOperator = '';
       this.lastValue = ''
     }
-    // Parentesis
+    // Parenthesis
     else if(Symbol === '()'){
-
+      if(!isNaN(Number(this.expression[this.expression.length-1]))){
+        this.expression += ')';
+      }
+      else if(['+', '-', '*', '/', '%', '('].includes(this.expression[this.expression.length-1]) ){
+        this.expression += '(';
+      }
+      else {
+        if((this.parenthesis % 2) === 0){
+        this.expression += '(';
+        }
+        else{
+          this.expression += ')'
+        }
+      }
+      this.parenthesis += 1;
     }
     // Positive/Negative
     else if(Symbol === '+/-'){
@@ -94,12 +109,12 @@ export class HomePage {
 
       if (this.expression.length > 0) {
         if(this.auxValue.startsWith('-')){
-          this.expression = this.expression.replace(/([+\-*/])?(-\d+\.?\d*)$/, (match, operator, number) => {
+          this.expression = this.expression.replace(/([+\-*/])?\((-\d+\.?\d*)$/, (match, operator, number) => {
           return (operator || '') + number.slice(1);;
           });
         }else{
           this.expression = this.expression.replace(/([+\-*/])?(\d+\.?\d*)$/, (match, operator, number) => {
-          return (operator || '') + '-' + number;
+          return (operator || '') + '(-' + number;
           });
         }
         
